@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDatumDto } from './dto/create-datum.dto';
-import { UpdateDatumDto } from './dto/update-datum.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Data } from './interfaces/data.interfaces';
 
 @Injectable()
 export class DataService {
-  create(createDatumDto: CreateDatumDto) {
-    return 'This action adds a new datum';
+  constructor(@InjectModel('Data') private readonly dataModel: Model<Data>) {}
+
+  async create(createDatumDto: CreateDatumDto): Promise<Data> {
+    const newData = new this.dataModel(createDatumDto);
+    return await newData.save();
   }
 
-  findAll() {
-    return `This action returns all data`;
+  async findAll(): Promise<Data[]> {
+    return await this.dataModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} datum`;
+  async findOne(id: string): Promise<Data> {
+    return await this.dataModel.findById(id);
   }
 
-  update(id: number, updateDatumDto: UpdateDatumDto) {
-    return `This action updates a #${id} datum`;
+  async update(id: string, updateDatumDto: CreateDatumDto): Promise<Data> {
+    return await this.dataModel.findByIdAndUpdate(id, updateDatumDto, { new: true});
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} datum`;
+  async remove(id: string): Promise<Data> {
+    return this.dataModel.findByIdAndDelete(id);
   }
 }
