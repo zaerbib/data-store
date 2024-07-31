@@ -29,23 +29,22 @@ export class UsersService {
   }
 
   async findById(id: string): Promise<User> {
-    const userId = new mongoose.Types.ObjectId(id);
-    return this.userModel.findById(userId);
+    return this.userModel.findOne({ uniqueId: id});
   }
 
   async updateByLogin(login: string, updateUserDto: UserDto): Promise<User> {
-    return this.userModel.findByIdAndUpdate(login, updateUserDto, {new : true});
+    return this.userModel.findOneAndUpdate({ login: login}, updateUserDto, {new : true});
   }
 
   async updateById(id: string, updateUserDto: UserDto): Promise<User> {
-    return this.userModel.findByIdAndUpdate(id, updateUserDto, {new: true});
+    return this.userModel.findOneAndUpdate({ uniqueId: id}, updateUserDto, {new: true});
   }
 
   async removeByLogin(login: string): Promise<User> {
-    return this.userModel.findByIdAndDelete(login);
+    return this.userModel.findOneAndDelete({ login: login});
   }
 
   async removeById(id: string): Promise<User> {
-    return this.userModel.findByIdAndUpdate(id);
+    return this.userModel.findOneAndUpdate({ uniqueId: id});
   }
 }
