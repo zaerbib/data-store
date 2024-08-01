@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UseGuards } from '@nestjs/common';
 import UserDto from './dto/user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { User } from './entities/user.entity';
 import { UserExist } from '../common/exception-filters/user-exist.exception';
+import { Roles } from '../common/decorator/roles.decorator';
+
 
 @Injectable()
 export class UsersService {
