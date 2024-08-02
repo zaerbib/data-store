@@ -1,24 +1,25 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
 
-const mockUserService = () => ({});
+const mockAuthService = () => ({});
 
 const mockJwtService = () => ({});
 
-describe('UsersController', () => {
-  let controller: UsersController;
-  let service: UsersService;
+describe('AuthController', () => {
+  let controller: AuthController;
+  let authService: AuthService;
   let jwtService: JwtService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [UsersController],
+      controllers: [AuthController],
       providers: [
+        AuthService,
         {
-          provide: UsersService,
-          useFactory: mockUserService
+          provide: AuthService,
+          useFactory: mockAuthService
         },
         {
           provide: JwtService,
@@ -27,8 +28,8 @@ describe('UsersController', () => {
       ],
     }).compile();
 
-    controller = module.get<UsersController>(UsersController);
-    service = module.get<UsersService>(UsersService);
+    controller = module.get<AuthController>(AuthController);
+    authService = module.get<AuthService>(AuthService);
     jwtService = module.get<JwtService>(JwtService);
   });
 

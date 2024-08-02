@@ -1,21 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
+import { AuthService } from './auth.service';
+import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 
 const mockUserService = () => ({});
-
 const mockJwtService = () => ({});
 
-describe('UsersController', () => {
-  let controller: UsersController;
-  let service: UsersService;
+describe('AuthService', () => {
+  let service: AuthService;
+  let userService: UsersService;
   let jwtService: JwtService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [UsersController],
       providers: [
+        AuthService,
         {
           provide: UsersService,
           useFactory: mockUserService
@@ -27,12 +26,12 @@ describe('UsersController', () => {
       ],
     }).compile();
 
-    controller = module.get<UsersController>(UsersController);
-    service = module.get<UsersService>(UsersService);
+    service = module.get<AuthService>(AuthService);
+    userService = module.get<UsersService>(UsersService);
     jwtService = module.get<JwtService>(JwtService);
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(service).toBeDefined();
   });
 });

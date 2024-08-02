@@ -3,7 +3,10 @@ import { UsersService } from './users.service';
 import UserDto from './dto/user.dto';
 import { Roles } from '../common/decorator/roles.decorator';
 import { Public } from '../common/decorator/public.decorator';
+import { PublicGuard } from '../common/guards/public.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
 
+@UseGuards(PublicGuard, RolesGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

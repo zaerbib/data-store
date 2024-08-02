@@ -9,7 +9,9 @@ import { UpdateRequestMiddleware } from 'src/common/update-request/update-reques
 @Module({
   imports: [MongooseModule.forFeature([{ name: 'Data', schema: DataSchema}])],
   controllers: [DataController],
-  providers: [DataService],
+  providers: [
+    DataService
+  ],
 })
 export class DataModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
