@@ -2,13 +2,15 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { UsersService } from './users.service';
 import UserDto from './dto/user.dto';
 import { Roles } from '../common/decorator/roles.decorator';
+import { Public } from '../common/decorator/public.decorator';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Public()
   @Post()
-  @Roles(['user'])
+  @Roles(['admin'])
   async create(@Body() createUserDto: UserDto) {
     return await this.usersService.create(createUserDto);
   }

@@ -16,5 +16,5 @@ export class User extends Document {
     description: string;
 
     @Prop()
-    role: string[];
+    roles: string[];
 }

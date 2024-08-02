@@ -7,6 +7,7 @@ import { User } from './entities/user.entity';
 import { UserRequestMiddleware } from 'src/common/user-request/user-request.middleware';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from 'src/common/guards/roles.guard';
+import { PublicGuard } from 'src/common/guards/public.guard';
 
 
 @Module({
@@ -17,6 +18,10 @@ import { RolesGuard } from 'src/common/guards/roles.guard';
     {
       provide: APP_GUARD,
       useClass: RolesGuard
+    }, 
+    {
+      provide: APP_GUARD,
+      useClass: PublicGuard
     }
   ],
 })
